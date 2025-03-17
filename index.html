@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deep800 Encoder & Decoder</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 20px; }
+        textarea { width: 90%; height: 100px; margin: 10px; font-size: 16px; }
+        button { font-size: 18px; margin: 10px; padding: 10px; }
+    </style>
+    <script>
+        const deep800Mapping = {
+            "q": "678UI", "w": "678UJ", "e": "1425600", "r": "UIIIOPP11122", "t": "8181HOLUg9",
+            "y": "LLUI10", "u": "LLIU11", "i": "21UILL", "o": "DDEEOO11", "p": "P1124",
+            "a": "SKIBWASD", "s": "BMKOMGTUP", "d": "HDOMMIH", "f": "HSFYNBN", "g": "HSHJAKL",
+            "h": "LTBBALB", "j": "MBNHIVC", "k": "ABTWTTAIIAWCFUY", "l": "HFTIISMBY", "z": "IWFBMBA",
+            "x": "B64ITEEEE", "c": "B64ITORIMT", "v": "AAAAAA", "b": "WIBJAIL", "n": "BBBBBB", "m": "E90IC",
+            ",": "/#", ".": "[]", "!": "()", "?": "&*", ":": "!(", ";": "!@(", "\"": "^^", "@": "**",
+            "#": "#!$", "$": "%^", "%": "$<", "^": "><", "<": ">", ">": "<", "(": "[", ")": "]",
+            "[": "(", "]": ")", "/": "\\", "\\": "/"
+        };
+
+        function encodeText() {
+            let input = document.getElementById("inputText").value;
+            let encoded = input.split('').map(char => {
+                if (char.toLowerCase() in deep800Mapping) {
+                    return char === char.toUpperCase() ? deep800Mapping[char.toLowerCase()].split('').reverse().join('') : deep800Mapping[char];
+                }
+                return char;
+            }).join('');
+            document.getElementById("outputText").value = encoded;
+        }
+
+        function decodeText() {
+            let input = document.getElementById("inputText").value;
+            let decoded = input;
+            Object.entries(deep800Mapping).forEach(([char, code]) => {
+                let reversedCode = code.split('').reverse().join('');
+                decoded = decoded.replaceAll(code, char);
+                decoded = decoded.replaceAll(reversedCode, char.toUpperCase());
+            });
+            document.getElementById("outputText").value = decoded;
+        }
+    </script>
+</head>
+<body>
+
+    <h1>Deep800 Encoder & Decoder</h1>
+    <textarea id="inputText" oninput="encodeText(); decodeText();" placeholder="Type here..."></textarea>
+    <h3>Result:</h3>
+    <textarea id="outputText" readonly placeholder="Encoded/Decoded text will appear here..."></textarea>
+
+</body>
+</html>
